@@ -1,22 +1,92 @@
+<!-- update.html -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>案件情報入力</title>
+    <title>顧客情報更新</title>
     <!-- Bootstrap CSSの読み込み -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <!-- ここにHTMLを書く -->
+        <h2 class="mb-4">顧客情報を更新してください</h2>
+        <form id="update-form">
+            <div class="form-group">
+                <label for="companyName">会社名:</label>
+                <input type="text" class="form-control" id="companyName" name="companyName" required>
+            </div>
+            <div class="form-group">
+                <label for="industry">業種:</label>
+                <input type="text" class="form-control" id="industry" name="industry" required>
+            </div>
+            <div class="form-group">
+                <label for="contact">連絡先:</label>
+                <input type="text" class="form-control" id="contact" name="contact" required>
+            </div>
+            <div class="form-group">
+                <label for="location">所在地:</label>
+                <input type="text" class="form-control" id="location" name="location" required>
+            </div>
+            <button type="button" class="btn btn-success" id="updateButton">更新</button>
+            <button type="button" class="btn btn-primary" onclick="goToDetail()">戻る</button>
+        </form>
     </div>
-    <script type="module">
-        <!-- ここにJSを書く -->
-    </script>
-    <!-- BootstrapのJavaScriptの読み込み -->
+
+    <!-- BootstrapのJavaScriptの読み込み --> 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Script should be moved down here -->
+    <script type="module">
+        const apiUrl = 'http://localhost:3324';
+
+        // URLから顧客IDを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const customerId = urlParams.get('id');
+
+        // 顧客詳細を取得
+        fetch(`${apiUrl}/customer/${customerId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // 取得したデータをコンソールに出力
+
+                // フォームに顧客情報をセット
+                const updateForm = document.getElementById('update-form');
+                if (updateForm) {
+                    const customer = data.customer;
+                    document.getElementById('companyName').value = customer.company_name;
+                    document.getElementById('industry').value = customer.industry;
+                    document.getElementById('contact').value = customer.contact;
+                    document.getElementById('location').value = customer.location;
+                } else {
+                    console.error('Error: Element with ID "update-form" not found.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+
+        // ボタンのクリックイベントに showConfirmation 関数を設定
+        document.getElementById('updateButton').addEventListener('click', showConfirmation);
+
+        // 関数 goToDetail を定義
+        window.goToDetail = function () {
+            window.location.href = `detail.html?id=${customerId}`;
+        };
+
+        // 顧客更新関数
+        function showConfirmation() {
+            const formData = new FormData(document.getElementById('update-form'));
+
+            // フォームの内容をオブジェクトに変換
+            const customerData = {};
+            formData.forEach((value, key) => {
+                customerData[key] = value;
+            });
+
+            // 確認画面へデータを渡して遷移
+            window.location.href = `/customer/update-confirm.html?id=${customerId}&data=${JSON.stringify(customerData)}`;
+        }
+    </script>
 </body>
 </html>

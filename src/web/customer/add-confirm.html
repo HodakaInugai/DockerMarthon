@@ -3,20 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>案件情報入力</title>
+    <title>確認画面</title>
     <!-- Bootstrap CSSの読み込み -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <!-- ここにHTMLを書く -->
+        <h2 class="mb-4">入力内容を確認してください</h2>
+        <div id="confirmation-details"></div>
+        <button type="button" class="btn btn-primary" onclick="goBack()">戻る</button>
+        <button type="button" class="btn btn-success" onclick="submitForm()">送信</button>
     </div>
-    <script type="module">
-        <!-- ここにJSを書く -->
-    </script>
+
     <!-- BootstrapのJavaScriptの読み込み -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Script should be moved down here -->
+    <script type="module">
+        const apiUrl = 'http://localhost:3324';
+
+        // URLからデータを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const rawData = urlParams.get('data');
+        const customerData = JSON.parse(rawData);
+
+        // 確認画面にデータを表示
+        const confirmationDetails = document.getElementById('confirmation-details');
+        for (const key in customerData) {
+            confirmationDetails.innerHTML += `<p><strong>${key}:</strong> ${customerData[key]}</p>`;
+        }
+
+        // ページが完全に読み込まれた後に以下のコードを実行する
+        document.addEventListener('DOMContentLoaded', function () {
+            // 関数 goBack を定義
+            window.goBack = function () {
+                window.history.back();
+            };
+
+            // 関数 submitForm を定義
+            window.submitForm = function () {
+                // フォームデータをサーバーに送信
+                fetch(`${apiUrl}/add-customer`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(customerData),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('顧客情報が正常に保存されました。');
+                        // フォームをリセット
+                        window.location.href = 'list.html';
+                    } else {
+                        alert('保存に失敗しました。');
+                        window.location.href = 'index.html';
+
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            };
+        });
+    </script>
 </body>
 </html>

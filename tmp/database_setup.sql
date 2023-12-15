@@ -39,7 +39,7 @@ CREATE TABLE negotiations (
 CREATE OR REPLACE FUNCTION update_updated_date()
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.updated_date = CURRENT_TIMESTAMP;
+    NEW.updated_date = CURRENT_TIMESTAMP;   
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

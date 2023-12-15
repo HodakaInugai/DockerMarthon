@@ -27,37 +27,39 @@
                 <label for="location">所在地:</label>
                 <input type="text" class="form-control" id="location" name="location" required>
             </div>
-            <button type="submit" class="btn btn-primary">送信</button>
+            <!-- <button type="submit" class="btn btn-primary">送信</button> -->
+            <button type="button" class="btn btn-primary" id="confirmationButton">確認画面へ</button>
         </form>
     </div>
-    <script type="module">
-        import config from '../config.js';
 
-        document.getElementById('customer-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            fetch(config.apiUrl + '/add-customer', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams([...formData])
-            }).then(response => response.json())
-              .then(data => {
-                if(data.success) {
-                    alert('顧客情報が正常に保存されました。');
-                    // フォームをリセット
-                    document.getElementById('customer-form').reset();
-                } else {
-                    alert('保存に失敗しました。');
-                }
-              })
-              .catch(error => console.error('Error:', error));
-        });
-    </script>
-    <!-- BootstrapのJavaScriptの読み込み -->
+    <!-- BootstrapのJavaScriptの読み込み --> 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Script should be moved down here -->
+    <script type="module">
+        const apiUrl = 'http://localhost:3324';
+
+        // ページが完全に読み込まれた後に以下のコードを実行する
+        document.addEventListener('DOMContentLoaded', function () {
+            // 関数 showConfirmation を定義
+            function showConfirmation() {
+                const formData = new FormData(document.getElementById('customer-form'));
+
+                // フォームの内容をオブジェクトに変換
+                const customerData = {};
+                formData.forEach((value, key) => {
+                    customerData[key] = value;
+                });
+
+                // 確認画面へデータを渡して遷移
+                window.location.href = `/customer/add-confirm.html?data=${JSON.stringify(customerData)}`;
+            }
+
+            // ボタンのクリックイベントに showConfirmation 関数を設定
+            document.getElementById('confirmationButton').addEventListener('click', showConfirmation);
+        });
+    </script>
 </body>
 </html>
