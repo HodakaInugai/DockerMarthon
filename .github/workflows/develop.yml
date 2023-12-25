@@ -1,22 +1,33 @@
-name: SSH Deploy
+name: Your Workflow Name
 
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout Repository
+    - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Run SSH command
-      run: |
-       mkdir -p ~/.ssh
-       echo -e "${{ secrets.DEV_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-       chmod 600 ~/.ssh/id_rsa
-       ssh -v -o StrictHostKeyChecking=no -p ${{ secrets.DEV_SSH_PORT }} ${{ secrets.DEV_SSH_USER }}@${{ secrets.DEV_SSH_HOST }} "bash /app/deploy_test.sh hodaka_inugai"
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
 
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run SSH command
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.DEV_PRIVATE_KEY }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        eval "$(ssh-agent -s)"
+        ssh-add ~/.ssh/id_rsa
+        ssh -v -o StrictHostKeyChecking=no -p ${{ secrets.DEV_SSH_PORT }} ${{ secrets.DEV_SSH_USER }}@${{ secrets.DEV_SSH_HOST }} "bash /app/deploy_test.sh hodaka_inugai"
