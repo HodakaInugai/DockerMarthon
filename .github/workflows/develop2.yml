@@ -13,5 +13,5 @@ jobs:
           SSH_HOST: ${{ secrets.REMOTE_HOST }}
           SSH_PORT: ${{ secrets.REMOTE_PORT }}
           SSH_USER: ${{ secrets.REMOTE_USER }}
-          SSH_KEY: ${{ secrets.REMOTE_SSH_KEY }}
+          SSHE_SSH_KEY: ${{ secrets.REMOTE_SSH_KEY }}
       - run: ssh ${{ steps.ssh.outputs.SERVER }} bash /app/deploy.sh hodaka_inugai
