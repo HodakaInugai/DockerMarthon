@@ -16,6 +16,6 @@ jobs:
     - name: Run SSH command
       run: |
         mkdir -p ~/.ssh
-        echo '${{ secrets.DEV_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        echo '${{ secrets.DEV_SSHE_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh -v -o StrictHostKeyChecking=no -p ${{ secrets.DEV_SSH_PORT }} ${{ secrets.DEV_SSH_USER }}@${{ secrets.DEV_SSH_HOST }} "bash /app/deploy_test.sh /usr/share/nginx/html/hodaka_inugai
