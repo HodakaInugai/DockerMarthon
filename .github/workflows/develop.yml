@@ -19,5 +19,4 @@ jobs:
         echo '${{ secrets.DEV_SSHE_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
-        # スクリプトのディレクトリに移動し、目的のディレクトリに移動
         ssh -v -o StrictHostKeyChecking=no -p ${{ secrets.DEV_SSH_PORT }} ${{ secrets.DEV_SSH_USER }}@${{ secrets.DEV_SSH_HOST }} "cd /usr/share/nginx/html/hodaka_inugai && bash /app/deploy.sh"
