@@ -14,4 +14,7 @@ jobs:
           SSH_PORT: ${{ secrets.DEV_SSH_PORT }}
           SSH_USER: ${{ secrets.DEV_SSH_USER }}
           SSH_KEY: ${{ secrets.DEV_SSHE_SSH_KEY }}
-      - run: chmod 600 ~/.ssh/id_rsa ${{ secrets.DEV_SSHE_SSH_KEY }}
+      - run: |
+         chmod 600 ~/.ssh/id_rsa
+         chmod 600 ${{ secrets.DEV_SSHE_SSH_KEY }}
+         ssh ${{ secrets.DEV_SSH_USER }}@${{ secrets.DEV_SSH_HOST }} -p ${{ secrets.DEV_SSH_PORT }} "cd /usr/share/nginx/html/hodaka_inugai/ && bash /app/deploy_test.sh"
