@@ -1,0 +1,22 @@
+name: ssh command
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.DEV_SSHE_SSH_KEY }}
+
+      - name: Run SSH command
+        run: |
+          ssh -p ${{ secrets.DEV_SSH_PORT }} ${{ secrets.DEV_SSH_USER }}@${{ secrets.DEV_SSH_HOST }} "cd /usr/share/nginx/html/hodaka_inugai/ && bash /app/deploy_test.sh"
