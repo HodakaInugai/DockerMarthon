@@ -15,7 +15,6 @@ jobs:
 
     - name: Run SSH command
       run: |
-        mkdir -p ~/.ssh
         echo '${{ secrets.DEV_SSHE_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
