@@ -13,9 +13,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.DEV_SSHE_SSH_KEY }}
+        run: |
+          echo "$DEV_SSHE_SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
 
       - name: Run SSH command
         run: |
