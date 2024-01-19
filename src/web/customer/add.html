@@ -38,28 +38,28 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!-- Script should be moved down here -->
-    <script type="module">
-        const apiUrl = 'http://dev.marathon.rplearn.net:3324';
+    //<script type="module">
+       // const apiUrl = 'http://dev.marathon.rplearn.net:3324';
 
         // ページが完全に読み込まれた後に以下のコードを実行する
-        document.addEventListener('DOMContentLoaded', function () {
+        //document.addEventListener('DOMContentLoaded', function () {
             // 関数 showConfirmation を定義
-            function showConfirmation() {
-                const formData = new FormData(document.getElementById('customer-form'));
+            //function showConfirmation() {
+                //const formData = new FormData(document.getElementById('customer-form'));
 
                 // フォームの内容をオブジェクトに変換
-                const customerData = {};
-                formData.forEach((value, key) => {
-                    customerData[key] = value;
-                });
+                //const customerData = {};
+                //formData.forEach((value, key) => {
+                    //customerData[key] = value;
+                //});
 
                 // 確認画面へデータを渡して遷移
-                window.location.href = `/customer/add-confirm.html?data=${JSON.stringify(customerData)}`;
+                //window.location.href = `/customer/add-confirm.html?data=${JSON.stringify(customerData)}`;
             }
 
             // ボタンのクリックイベントに showConfirmation 関数を設定
-            document.getElementById('confirmationButton').addEventListener('click', showConfirmation);
-        });
-    </script>
+            //document.getElementById('confirmationButton').addEventListener('click', showConfirmation);
+        //});
+   // </script>
 </body>
 </html>
