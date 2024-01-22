@@ -8,7 +8,7 @@ app.use(express.json());
 
 // CORSミドルウェアの設定
 const corsOptions = {
-  origin: "http://dev.marathon.rplearn.net", // 許可するオリジンを指定
+  origin: "*", // 許可するオリジンを指定
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
