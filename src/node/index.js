@@ -1,10 +1,20 @@
 const express = require("express");
 const app = express();
-app.use(express.urlencoded({ extended: true }));
-const port = 3324;
 const cors = require("cors");
-app.use(cors());
 const { Pool } = require("pg");
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// CORSミドルウェアの設定
+const corsOptions = {
+  origin: "http://dev.marathon.rplearn.net", // 許可するオリジンを指定
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
+
 const pool = new Pool({
   user: "user_hodaka_inugai",
   host: "localhost",
@@ -12,6 +22,8 @@ const pool = new Pool({
   password: "pass",
   port: 5432,
 });
+
+const port = 3324;
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
