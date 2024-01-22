@@ -51,6 +51,7 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(customerData),
+                    mode: 'cors', // モードをcorsに設定
                 })
                 .then(response => response.json())
                 .then(data => {
