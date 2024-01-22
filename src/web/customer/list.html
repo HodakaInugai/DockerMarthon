@@ -30,12 +30,12 @@
   </div>
 
   <script type="module">
-    const apiUrl = 'https://dev.marathon.rplearn.net';
+    const apiUrl = '/api_hodaka_inugai';
   
     // 顧客リストを取得して表示
     fetch(`${apiUrl}/customer`)
       .then((response) => response.json())
-      .then((data) => {
+      .then((data) => 
         const list = document.getElementById("customer-list");
         data.forEach((customer, index) => {
           console.log(customer); // 追加
