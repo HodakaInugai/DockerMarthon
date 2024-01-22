@@ -24,6 +24,7 @@ const pool = new Pool({
 });
 
 const port = 3324;
+const apiUrl = 'http://localhost:3324'; // 追加
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
