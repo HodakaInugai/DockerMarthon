@@ -1,5 +1,5 @@
 const config = {
-  apiUrl: '/api_hodaka_inugai'
+  apiUrl: 'dev.marathon.rplearn.net'
 };
 
 export default config;
