@@ -45,7 +45,7 @@
             // 関数 submitForm を定義
             window.submitForm = function () {
                 // フォームデータをサーバーに送信
-                fetch(`${apiUrl}/hodaka_inugai/add-customer`, {
+                fetch(`${apiUrl}/add-customer`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -57,10 +57,10 @@
                     if (data.success) {
                         alert('顧客情報が正常に保存されました。');
                         // フォームをリセット
-                        window.location.href = 'list.html';
+                        window.location.href = 'hodaka_inugai/list.html';
                     } else {
                         alert('保存に失敗しました。');
-                        window.location.href = 'index.html';
+                        window.location.href = 'hodaka_inugai/index.html';
 
                     }
                 })
