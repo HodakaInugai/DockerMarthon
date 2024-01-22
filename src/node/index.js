@@ -6,10 +6,10 @@ const cors = require("cors");
 app.use(cors());
 const { Pool } = require("pg");
 const pool = new Pool({
-  user: "user_3324",
-  host: "172.18.0.2",
-  database: "crm_3324",
-  password: "pass_3324",
+  user: "user_hodaka_inugai",
+  host: "localhost",
+  database: "db_hodaka_inugai",
+  password: "pass",
   port: 5432,
 });
 
@@ -17,7 +17,7 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-app.get("/customer", async (req, res) => {
+app.get("/customer", async (req, res) =>
   try {
     const customerData = await pool.query("SELECT * FROM customers");
     res.send(customerData.rows);
