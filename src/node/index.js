@@ -15,6 +15,12 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+// x-content-type-options ヘッダーの追加
+app.use((req, res, next) => {
+  res.setHeader("x-content-type-options", "nosniff");
+  next();
+});
+
 const pool = new Pool({
   user: "user_hodaka_inugai",
   host: "localhost",
