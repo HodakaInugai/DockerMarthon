@@ -59,11 +59,7 @@ window.submitForm = function () {
             // フォームをリセット
             window.location.href = 'list.html';
         } else {
-            alert('保存に失敗しました。');
-            if (data.error) {
-                // サーバーからのエラーメッセージがあれば表示
-                alert(`エラーメッセージ: ${data.error}`);
-            }
+            alert(`保存に失敗しました。\nエラーメッセージ: ${data.error || '不明なエラー'}`);
             console.error('Server returned failure:', data); // サーバー応答をコンソールに表示
             // window.location.href = 'index.html';
         }
@@ -73,7 +69,6 @@ window.submitForm = function () {
         alert(`データの送信に失敗しました。\nエラーメッセージ: ${error.message}`);
     });
 };
-
         });
     </script>
 </body>
