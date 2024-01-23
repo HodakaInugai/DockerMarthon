@@ -66,9 +66,6 @@
                     if (data.error) {
                         // サーバーからのエラーメッセージがあれば表示
                         alert(`エラーメッセージ: ${data.error}`);
-                    }
-                    console.error('Server returned failure:', data); // サーバー応答をコンソールに表示
-                    // window.location.href = 'index.html';
                 }
             })
             .catch(error => {
