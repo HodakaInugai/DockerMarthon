@@ -20,31 +20,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
- <!-- Script should be moved down here -->
-<script type="module">
-    const apiUrl = '/api_hodaka_inugai'; // バックエンドのURLに変更
+    <!-- Script should be moved down here -->
+    <script>
+        const apiUrl = '/api_hodaka_inugai'; // バックエンドのURLに変更
 
-    // URLからデータを取得
-    const urlParams = new URLSearchParams(window.location.search);
-    const rawData = urlParams.get('data');
-    const customerData = JSON.parse(rawData);
+        // URLからデータを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const rawData = urlParams.get('data');
+        const customerData = JSON.parse(rawData);
 
-    // 確認画面にデータを表示
-    const confirmationDetails = document.getElementById('confirmation-details');
-    for (const key in customerData) {
-        confirmationDetails.innerHTML += `<p><strong>${key}:</strong> ${customerData[key]}</p>`;
-    }
+        // 確認画面にデータを表示
+        const confirmationDetails = document.getElementById('confirmation-details');
+        for (const key in customerData) {
+            confirmationDetails.innerHTML += `<p><strong>${key}:</strong> ${customerData[key]}</p>`;
+        }
 
-    // ページが完全に読み込まれた後に以下のコードを実行する
-    document.addEventListener('DOMContentLoaded', function () {
-        // 関数 goBack を定義
-        window.goBack = function () {
-            window.history.back();
-        };
-
-        // 関数 submitForm を定義
-        window.submitForm = function () {
-            // フォームデータをサーバーに送信
+        // フォームデータをサーバーに送信
+        function submitForm() {
             fetch(`${apiUrl}/add-customer`, {
                 method: 'POST',
                 headers: {
@@ -66,15 +58,14 @@
                     if (data.error) {
                         // サーバーからのエラーメッセージがあれば表示
                         alert(`エラーメッセージ: ${data.error}`);
+                    }
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert(`データの送信に失敗しました。`);
             });
-        };
-    });
-</script>
-
+        }
+    </script>
 </body>
 </html>
