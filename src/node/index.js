@@ -30,7 +30,7 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-app.get("/customer", async (req, res) => {
+app.get("/api_hodaka_inugai/customer", async (req, res) => {
   try {
     const customerData = await pool.query("SELECT * FROM customers");
     res.send(customerData.rows);
@@ -40,7 +40,7 @@ app.get("/customer", async (req, res) => {
   }
 });
 
-app.get("/customer/:customerId", async (req, res) => {
+app.get("/api_hodaka_inugai/customer/:customerId", async (req, res) => {
   try {
     const customerId = req.params.customerId;
     const customerData = await pool.query("SELECT * FROM customers WHERE customer_id = $1", [customerId]);
@@ -56,7 +56,7 @@ app.get("/customer/:customerId", async (req, res) => {
   }
 });
 
-app.delete("/customer/:customerId", async (req, res) => {
+app.delete("/api_hodaka_inugai/customer/:customerId", async (req, res) => {
   try {
     const customerId = req.params.customerId;
     const deleteResult = await pool.query("DELETE FROM customers WHERE customer_id = $1 RETURNING *", [customerId]);
@@ -75,7 +75,7 @@ app.delete("/customer/:customerId", async (req, res) => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.post("/add-customer", async (req, res) => {
+app.post("/api_hodaka_inugai/add-customer", async (req, res) => {
   try {
     console.log(req.body);
 
@@ -91,7 +91,7 @@ app.post("/add-customer", async (req, res) => {
   }
 });
 
-app.put("/customer/:customerId", async (req, res) => {
+app.put("/api_hodaka_inugai/customer/:customerId", async (req, res) => {
   try {
     const customerId = req.params.customerId;
     const { companyName, industry, contact, location } = req.body;
