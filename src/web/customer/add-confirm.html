@@ -52,8 +52,11 @@ window.submitForm = function () {
         },
         body: JSON.stringify(customerData),
     })
-    .then(response => response.json())
-    .then(data => {
+    .then(response => {
+    console.log('Server Response:', response);
+    return response.json();
+})
+.then(data => {
         if (data.success) {
             alert('顧客情報が正常に保存されました。');
             // フォームをリセット
