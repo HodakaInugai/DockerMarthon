@@ -45,8 +45,14 @@
                 body: JSON.stringify(customerData),
             })
             .then(response => {
-                console.log('Server Response:', response);
-                return response.json();
+ 　　　　　   if (response.ok) {
+     　　　　 // レスポンスが成功した場合
+     　　　　 console.log('Server Response:', response);
+     　　　　 return response.json(); // JSONデータを解析
+    　　　　　} else {
+     　　　　　 // レスポンスがエラーの場合
+      　　　　throw new Error('Network response was not ok');
+   　　　　　 }
             })
             .then(data => {
                 if (data.success) {
