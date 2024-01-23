@@ -42,7 +42,7 @@
                 window.history.back();
             };
 
-            // 関数 submitForm を定義
+          // 関数 submitForm を定義
 window.submitForm = function () {
     // フォームデータをサーバーに送信
     fetch(`${apiUrl}/add-customer`, {
@@ -64,6 +64,7 @@ window.submitForm = function () {
                 // サーバーからのエラーメッセージがあれば表示
                 alert(`エラーメッセージ: ${data.error}`);
             }
+            console.error('Server returned failure:', data); // サーバー応答をコンソールに表示
             // window.location.href = 'index.html';
         }
     })
@@ -72,6 +73,7 @@ window.submitForm = function () {
         alert(`データの送信に失敗しました。\nエラーメッセージ: ${error.message}`);
     });
 };
+
         });
     </script>
 </body>
