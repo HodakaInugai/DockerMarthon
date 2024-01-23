@@ -42,32 +42,33 @@
                 window.history.back();
             };
 
-          // 関数 submitForm を定義
-window.submitForm = function () {
-    // フォームデータをサーバーに送信
-    fetch(`${apiUrl}/add-customer`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(customerData),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('顧客情報が正常に保存されました。');
-            // フォームをリセット
-            window.location.href = 'list.html';
-        } else {
-            alert('保存に失敗しました。');
-            // window.location.href = 'index.html';
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert(`データの送信に失敗しました。\nエラーメッセージ: ${error.message}`);
-    });
-};
+            // 関数 submitForm を定義
+            window.submitForm = function () {
+                // フォームデータをサーバーに送信
+                fetch(`${apiUrl}/add-customer`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(customerData),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('顧客情報が正常に保存されました。');
+                        // フォームをリセット
+                        window.location.href = 'list.html';
+                    } else {
+                        alert('保存に失敗しました。');
+                        // window.location.href = 'index.html';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert(`データの送信に失敗しました。\nエラーメッセージ: ${error.message}`);
+                });
+            };
+        });
     </script>
 </body>
 </html>
