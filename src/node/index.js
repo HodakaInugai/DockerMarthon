@@ -7,12 +7,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // CORSミドルウェアの設定
-const corsOptions = {
-  origin: "*", // 許可するオリジンを指定
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-};
+// const corsOptions = {
+//   origin: "*", // 許可するオリジンを指定
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   credentials: true,
+//   optionsSuccessStatus: 204,
+// };
 app.use(cors(corsOptions));
 
 // x-content-type-options ヘッダーの追加
