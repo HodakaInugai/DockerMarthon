@@ -71,11 +71,6 @@
       })
       .catch((error) => console.error(error));
   
-    function viewDetails(id) {
-      // 詳細ページへの遷移処理
-      window.location.href = `/customer/detail.html?id=${encodeURIComponent(id)}`;
-    }
-  
     function deleteCustomer(id) {
       // 削除処理
       const confirmDelete = confirm("本当に削除しますか？");
