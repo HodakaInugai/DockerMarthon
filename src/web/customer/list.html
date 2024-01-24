@@ -80,7 +80,7 @@
       // 削除処理
       const confirmDelete = confirm("本当に削除しますか？");
       if (confirmDelete) {
-        fetch(`${apiUrl}/customer/${id}`, {
+        fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
           method: "DELETE",
         })
           .then((response) => response.json())
