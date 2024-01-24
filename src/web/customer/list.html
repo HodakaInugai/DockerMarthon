@@ -30,7 +30,7 @@
     const apiUrl = '/api_hodaka_inugai';
 
     // 顧客リストを取得して表示
-    fetch(`${apiUrl}/api_hodaka_inugai/customer`)
+    fetch(`${apiUrl}/customer`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -86,7 +86,7 @@
       // 削除処理
       const confirmDelete = confirm("本当に削除しますか？");
       if (confirmDelete) {
-        fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
+        fetch(`${apiUrl}/customer/${id}`, {
           method: 'DELETE',
         })
           .then(response => response.json())
