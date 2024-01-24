@@ -33,7 +33,7 @@
     // 顧客リストを取得して表示
     fetch(`${apiUrl}/api_hodaka_inugai/customer`)
       .then((response) => response.json())
-      .then((data) => 
+      .then((data) => {
         const list = document.getElementById("customer-list");
         data.forEach((customer, index) => {
           console.log(customer); // 追加
