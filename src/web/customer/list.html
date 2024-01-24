@@ -31,12 +31,7 @@
 
     // 顧客リストを取得して表示
     fetch(`${apiUrl}/customer`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         const list = document.getElementById("customer-list");
         data.forEach((customer, index) => {
