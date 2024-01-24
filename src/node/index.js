@@ -3,23 +3,17 @@ const app = express();
 const cors = require("cors");
 const { Pool } = require("pg");
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-// CORSミドルウェアの設定
-// const corsOptions = {
-//   origin: "*", // 許可するオリジンを指定
-//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   credentials: true,
-//   optionsSuccessStatus: 204,
-// };
-app.use(cors(corsOptions));
+// CORSミドルウェアを使用
+app.use(cors());
 
 // x-content-type-options ヘッダーの追加
 app.use((req, res, next) => {
   res.setHeader("x-content-type-options", "nosniff");
   next();
 });
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const pool = new Pool({
   user: "user_hodaka_inugai",
@@ -118,5 +112,3 @@ app.put("/api_hodaka_inugai/customer/:customerId", async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 });
-
-
