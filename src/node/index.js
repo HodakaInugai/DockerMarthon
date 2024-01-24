@@ -81,10 +81,10 @@ app.post("/api_hodaka_inugai/add-customer", async (req, res) => {
   try {
     console.log(req.body);
 
-    const { company_name, industry, contact, location } = req.body; // カラム名を修正
+    const { companyName, industry, contact, location } = req.body; // カラム名を修正
     const newCustomer = await pool.query(
-      "INSERT INTO customers (company_name, industry, contact, location) VALUES ($1, $2, $3, $4) RETURNING *",
-      [company_name, industry, contact, location] // カラム名を修正
+      "INSERT INTO customers (companyName, industry, contact, location) VALUES ($1, $2, $3, $4) RETURNING *",
+      [companyName, industry, contact, location] // カラム名を修正
     );
     res.json({ success: true, customer: newCustomer.rows[0] });
   } catch (err) {
@@ -96,11 +96,11 @@ app.post("/api_hodaka_inugai/add-customer", async (req, res) => {
 app.put("/api_hodaka_inugai/customer/:customerId", async (req, res) => {
   try {
     const customerId = req.params.customerId;
-    const { company_name, industry, contact, location } = req.body; // カラム名を修正
+    const { companyName, industry, contact, location } = req.body; // カラム名を修正
 
     const updatedCustomer = await pool.query(
       "UPDATE customers SET company_name = $1, industry = $2, contact = $3, location = $4 WHERE customer_id = $5 RETURNING *",
-      [company_name, industry, contact, location, customerId] // カラム名を修正
+      [companyName, industry, contact, location, customerId] // カラム名を修正
     );
 
     if (updatedCustomer.rows.length > 0) {
