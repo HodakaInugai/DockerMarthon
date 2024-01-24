@@ -17,8 +17,7 @@
           <th scope="col">#</th>
           <th scope="col">Company Name</th>
           <th scope="col">Contact</th>
-          <th scope="col">　Actions</th>
-
+          <th scope="col">Actions</th> <!-- 半角スペースを削除 -->
         </tr>
       </thead>
       <tbody id="customer-list">
@@ -29,14 +28,14 @@
 
   <script type="module">
     const apiUrl = '/api_hodaka_inugai';
-  
+
     // 顧客リストを取得して表示
-    fetch(`${apiUrl}/api_hodaka_inugai/customer`)
+    fetch(`${apiUrl}/customer`) // ここを修正
       .then((response) => response.json())
       .then((data) => {
         const list = document.getElementById("customer-list");
         data.forEach((customer, index) => {
-          console.log(customer); // 追加
+          console.log(customer);
           const row = list.insertRow();
           const cell1 = row.insertCell(0);
           const cell2 = row.insertCell(1);
@@ -45,54 +44,56 @@
           cell1.textContent = index + 1;
           cell2.textContent = customer.company_name;
           cell3.textContent = customer.contact;
-  
-          // <!-- 詳細ボタンの生成部分 -->
+
+          // 詳細ボタンの生成部分
           const detailsButton = document.createElement("a");
-          detailsButton.href = `/api_hodaka_inugai/customer/detail.html?id=${encodeURIComponent(customer.customer_id)}`;
+          detailsButton.href = `/api_hodaka_inugai/customer/detail.html?id=${encodeURIComponent(
+            customer.customer_id
+          )}`;
           detailsButton.textContent = "詳細";
           detailsButton.className = "btn btn-info btn-sm";
           detailsButton.onclick = function () {
             // 詳細ページへの遷移処理
-            viewDetails(/api_hodaka_inugai/customer.customer_id);
+            viewDetails(customer.customer_id);
           };
           cell4.appendChild(detailsButton);
-  
-          // <!-- 削除ボタンの生成部分 -->
+
+          // 削除ボタンの生成部分
           const deleteButton = document.createElement("button");
           deleteButton.textContent = "削除";
           deleteButton.className = "btn btn-danger btn-sm ml-2";
           deleteButton.onclick = function () {
             // 削除処理
-            deleteCustomer(/api_hodaka_inugai/customer.customer_id);
+            deleteCustomer(customer.customer_id);
           };
           cell4.appendChild(deleteButton);
         });
       })
       .catch((error) => console.error(error));
-  
+
     function viewDetails(id) {
       // 詳細ページへの遷移処理
       window.location.href = `/api_hodaka_inugai/customer/detail.html?id=${encodeURIComponent(id)}`;
     }
-  
+
     function deleteCustomer(id) {
       // 削除処理
       const confirmDelete = confirm("本当に削除しますか？");
       if (confirmDelete) {
-        fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
-          method: 'DELETE',
+        fetch(`${apiUrl}/customer/${id}`, {
+          method: "DELETE",
         })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            alert('削除が成功しました。');
-            // ページリロード
-            location.reload();
-          } else {
-            alert('削除に失敗しました。');
-          }
-        })
-        .catch(error => console.error('Error:', error));
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert("削除が成功しました。");
+              // ページリロード
+              location.reload();
+            } else {
+              alert("削除に失敗しました。");
+            }
+          })
+          .catch((error) => console.error("Error:", error));
       }
     }
   </script>
