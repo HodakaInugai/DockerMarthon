@@ -38,7 +38,7 @@
         // ページ内の詳細ボタンがクリックされたときの処理
         function viewDetails(id) {
             // 詳細ページへの遷移処理
-            window.location.href = `${apiUrl}/customer/detail.html?id=${encodeURIComponent(id)}`;
+            window.location.href = `${apiUrl}/api_hodaka_inugai/customer/detail.html?id=${encodeURIComponent(id)}`;
         }
 
         // ページ内の削除ボタンがクリックされたときの処理
@@ -46,7 +46,7 @@
             // 削除処理
             const confirmDelete = confirm("本当に削除しますか？");
             if (confirmDelete) {
-                fetch(`${apiUrl}/customer/${id}`, {
+                fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
                     method: 'DELETE',
                 })
                     .then(response => response.json())
