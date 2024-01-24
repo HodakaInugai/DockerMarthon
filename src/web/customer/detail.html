@@ -72,7 +72,7 @@
 
             if (confirmation) {
                 // フォームデータをサーバーに送信
-                fetch(`${apiUrl}/customer/${customerId}`, {
+                fetch(`${apiUrl}/api_hodaka_inugai/customer/${customerId}`, {
                     method: 'DELETE',
                 })
                     .then(response => response.json())
