@@ -1,78 +1,105 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>確認画面</title>
-    <!-- Bootstrap CSSの読み込み -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer List</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
+
 <body>
-    <div class="container mt-5">
-        <h2 class="mb-4">入力内容を確認してください</h2>
-        <div id="confirmation-details"></div>
-        <button type="button" class="btn btn-primary" onclick="goBack()">戻る</button>
-        <button type="button" class="btn btn-success" onclick="submitForm()">送信</button>
-    </div>
+  <div class="container mt-5">
+    <h1 class="mb-4">顧客情報リスト</h1>
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Company Name</th>
+          <th scope="col">Contact</th>
+          <th scope="col">　Actions</th>
 
-    <!-- BootstrapのJavaScriptの読み込み -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        </tr>
+      </thead>
+      <tbody id="customer-list">
+        <!-- 顧客データはここに挿入されます -->
+      </tbody>
+    </table>
+  </div>
 
-    <!-- JavaScript -->
-    <script>
-        const apiUrl = '/api_hodaka_inugai';
+  <script type="module">
+    const apiUrl = '/api_hodaka_inugai';
+  
+    // 顧客リストを取得して表示
+    fetch(`${apiUrl}/api_hodaka_inugai/customer`)
+      .then((response) => response.json())
+      .then((data) => {
+        const list = document.getElementById("customer-list");
+        data.forEach((customer, index) => {
+          console.log(customer); // 追加
+          const row = list.insertRow();
+          const cell1 = row.insertCell(0);
+          const cell2 = row.insertCell(1);
+          const cell3 = row.insertCell(2);
+          const cell4 = row.insertCell(3);
+          cell1.textContent = index + 1;
+          cell2.textContent = customer.company_name;
+          cell3.textContent = customer.contact;
+  
+          // <!-- 詳細ボタンの生成部分 -->
+          const detailsButton = document.createElement("a");
+          detailsButton.href = `/api_hodaka_inugai/customer/detail.html?id=${encodeURIComponent(customer.customer_id)}`;
+          detailsButton.textContent = "詳細";
+          detailsButton.className = "btn btn-info btn-sm";
+          detailsButton.onclick = function () {
+            // 詳細ページへの遷移処理
+            viewDetails(customer.customer_id);
+          };
+          cell4.appendChild(detailsButton);
+  
+          // <!-- 削除ボタンの生成部分 -->
+          const deleteButton = document.createElement("button");
+          deleteButton.textContent = "削除";
+          deleteButton.className = "btn btn-danger btn-sm ml-2";
+          deleteButton.onclick = function () {
+            // 削除処理
+            deleteCustomer(customer.customer_id);
+          };
+          cell4.appendChild(deleteButton);
+        });
+      })
+      .catch((error) => console.error(error));
+  
+    function viewDetails(id) {
+      // 詳細ページへの遷移処理
+      window.location.href = `/api_hodaka_inugai/customer/detail.html?id=${encodeURIComponent(id)}`;
+    }
+  
+    function deleteCustomer(id) {
+      // 削除処理
+      const confirmDelete = confirm("本当に削除しますか？");
+      if (confirmDelete) {
+        fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
+          method: 'DELETE',
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('削除が成功しました。');
+            // ページリロード
+            location.reload();
+          } else {
+            alert('削除に失敗しました。');
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      }
+    }
+  </script>
 
-        // URLからデータを取得
-        const urlParams = new URLSearchParams(window.location.search);
-        const rawData = urlParams.get('data');
-        const customerData = JSON.parse(rawData);
-
-        // 確認画面にデータを表示
-        const confirmationDetails = document.getElementById('confirmation-details');
-        for (const key in customerData) {
-            confirmationDetails.innerHTML += `<p><strong>${key}:</strong> ${customerData[key]}</p>`;
-        }
-
-        // フォームデータをサーバーに送信
-        function submitForm() {
-            fetch(`${apiUrl}/api_hodaka_inugai/add-customer`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(customerData),
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Server Response:', response);
-                    return response.json();
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('顧客情報が正常に保存されました。');
-                    window.location.href = 'list.html';
-                } else {
-                    alert('保存に失敗しました。');
-                    if (data.error) {
-                        alert(`エラーメッセージ: ${data.error}`);
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert(`データの送信に失敗しました。`);
-            });
-        }
-
-        // 戻るボタンの処理
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
