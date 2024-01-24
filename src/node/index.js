@@ -23,7 +23,7 @@ const pool = new Pool({
   port: 5432,
 });
 
-const port = 3333;
+const port = 3324;
 const apiUrl = '/api_hodaka_inugai'; // 追加
 
 app.listen(port, () => {
