@@ -20,9 +20,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <!-- Script should be moved down here -->
+    <!-- JavaScript -->
     <script>
-        const apiUrl = 'http://dev.marathon.rplearn.net:3324/api_hodaka_inugai';// バックエンドのURLに変更
+        const apiUrl = 'http://dev.marathon.rplearn.net:3324/api_hodaka_inugai';
 
         // URLからデータを取得
         const urlParams = new URLSearchParams(window.location.search);
@@ -45,24 +45,20 @@
                 body: JSON.stringify(customerData),
             })
             .then(response => {
- 　　　　　   if (response.ok) {
-     　　　　 // レスポンスが成功した場合
-     　　　　 console.log('Server Response:', response);
-     　　　　 return response.json(); // JSONデータを解析
-    　　　　　} else {
-     　　　　　 // レスポンスがエラーの場合
-      　　　　throw new Error('Network response was not ok');
-   　　　　　 }
+                if (response.ok) {
+                    console.log('Server Response:', response);
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok');
+                }
             })
             .then(data => {
                 if (data.success) {
                     alert('顧客情報が正常に保存されました。');
-                    // フォームをリセット
                     window.location.href = 'list.html';
                 } else {
                     alert('保存に失敗しました。');
                     if (data.error) {
-                        // サーバーからのエラーメッセージがあれば表示
                         alert(`エラーメッセージ: ${data.error}`);
                     }
                 }
@@ -71,6 +67,11 @@
                 console.error('Error:', error);
                 alert(`データの送信に失敗しました。`);
             });
+        }
+
+        // 戻るボタンの処理
+        function goBack() {
+            window.history.back();
         }
     </script>
 </body>
