@@ -26,8 +26,7 @@
 
     <script type="module">
         const apiUrl = '/api_hodaka_inugai';
-        const customerId = 1; // 顧客IDを指定
-
+        
         // 顧客リストを取得して表示
         fetch(`${apiUrl}/customer`)
           .then((response) => response.json())
@@ -36,68 +35,13 @@
           })
           .catch((error) => console.error(error));
 
-        // 顧客詳細を取得
-        fetch(`${apiUrl}/customer/${customerId}`)
-          .then((response) => response.json())
-          .then((data) => {
-            // 顧客詳細を表示するコードを追加
-          })
-          .catch((error) => console.error(error));
-
-        // 顧客削除
-        fetch(`${apiUrl}/customer/${customerId}`, {
-          method: 'DELETE',
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            // 削除結果を表示するコードを追加
-          })
-          .catch((error) => console.error(error));
-
-        // 新しい顧客を追加
-        fetch(`${apiUrl}/add-customer`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            company_name: 'Company Name',
-            industry: 'Industry',
-            contact: 'Contact',
-            location: 'Location',
-          }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            // 新しい顧客の追加結果を表示するコードを追加
-          })
-          .catch((error) => console.error(error));
-
-        // 顧客データを更新
-        fetch(`${apiUrl}/customer/${customerId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            company_name: 'Updated Company Name',
-            industry: 'Updated Industry',
-            contact: 'Updated Contact',
-            location: 'Updated Location',
-          }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            // 更新結果を表示するコードを追加
-          })
-          .catch((error) => console.error(error));
-
-
+        // ページ内の詳細ボタンがクリックされたときの処理
         function viewDetails(id) {
             // 詳細ページへの遷移処理
-            window.location.href = `/api_hodaka_inugai/customer/detail.html?id=${encodeURIComponent(id)}`;
+            window.location.href = `${apiUrl}/customer/detail.html?id=${encodeURIComponent(id)}`;
         }
 
+        // ページ内の削除ボタンがクリックされたときの処理
         function deleteCustomer(id) {
             // 削除処理
             const confirmDelete = confirm("本当に削除しますか？");
