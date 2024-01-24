@@ -18,6 +18,7 @@
           <th scope="col">Company Name</th>
           <th scope="col">Contact</th>
           <th scope="col">　Actions</th>
+
         </tr>
       </thead>
       <tbody id="customer-list">
@@ -28,7 +29,7 @@
 
   <script type="module">
     const apiUrl = '/api_hodaka_inugai';
-
+  
     // 顧客リストを取得して表示
     fetch(`${apiUrl}/api_hodaka_inugai/customer`)
       .then((response) => response.json())
@@ -41,18 +42,23 @@
           const cell2 = row.insertCell(1);
           const cell3 = row.insertCell(2);
           const cell4 = row.insertCell(3);
-          cell1.textContent = customer.customer_id; // customer_id を表示
-          cell2.textContent = customer.companyName; // companyName を表示
+          cell1.textContent = index + 1;
+          cell2.textContent = customer.companyname;
           cell3.textContent = customer.contact;
-
+  
           // 詳細ボタンの生成部分
           const detailsButton = document.createElement("a");
           detailsButton.href = `/customer/detail.html?id=${encodeURIComponent(customer.customer_id)}`;
           detailsButton.textContent = "詳細";
           detailsButton.className = "btn btn-info btn-sm";
+          detailsButton.onclick = function () {
+          // 詳細ページへの遷移処理
+          viewDetails(customer.customer_id);
+          };
           cell4.appendChild(detailsButton);
 
-          // 削除ボタンの生成部分
+  
+          // <!-- 削除ボタンの生成部分 -->
           const deleteButton = document.createElement("button");
           deleteButton.textContent = "削除";
           deleteButton.className = "btn btn-danger btn-sm ml-2";
@@ -64,7 +70,7 @@
         });
       })
       .catch((error) => console.error(error));
-
+  
     function deleteCustomer(id) {
       // 削除処理
       const confirmDelete = confirm("本当に削除しますか？");
