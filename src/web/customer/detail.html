@@ -28,8 +28,21 @@
         const apiUrl = '/api_hodaka_inugai';
 
         // URLから顧客IDを取得
-        const urlParams = new URLSearchParams(window.location.search);
-        const customerId = urlParams.get('id');
+const urlParams = new URLSearchParams(window.location.search);
+const customerId = urlParams.get('id');
+
+// customerIdがnullまたはundefinedの場合にエラーハンドリングを追加
+if (customerId === null || customerId === undefined) {
+    // エラー処理をここに追加するか、適切なデフォルトの顧客IDを設定してください
+    console.error('Error: Customer ID is null or undefined.');
+} else {
+    // 顧客詳細を取得するためのURLを生成
+    const apiUrl = '/api_hodaka_inugai';
+    const customerDetailUrl = `${apiUrl}/api_hodaka_inugai/customer/${customerId}`;
+
+    // ... 以下のコードは変更なし ...
+}
+
 
         // 顧客詳細を取得
         fetch(`${apiUrl}/api_hodaka_inugai/customer/${customerId}`)
