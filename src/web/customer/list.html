@@ -25,51 +25,72 @@
     </div>
 
     <script type="module">
-        const apiUrl = '/api_hodaka_inugai/customer';
+        const apiUrl = '/api_hodaka_inugai';
 
-        // 顧客リストを取得して表示
-        fetch(apiUrl)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                const list = document.getElementById("customer-list");
-                data.forEach((customer, index) => {
-                    const row = list.insertRow();
-                    const cell1 = row.insertCell(0);
-                    const cell2 = row.insertCell(1);
-                    const cell3 = row.insertCell(2);
-                    const cell4 = row.insertCell(3);
-                    cell1.textContent = index + 1;
-                    cell2.textContent = customer.company_name;
-                    cell3.textContent = customer.contact;
+// 顧客リストを取得して表示
+fetch(`${apiUrl}/customer`)
+  .then((response) => response.json())
+  .then((data) => {
+    // ...
+  })
+  .catch((error) => console.error(error));
 
-                    // 詳細ボタンの生成部分
-                    const detailsButton = document.createElement("a");
-                    detailsButton.href = `/api_hodaka_inugai/customer/detail.html?id=${encodeURIComponent(customer.customer_id)}`;
-                    detailsButton.textContent = "詳細";
-                    detailsButton.className = "btn btn-info btn-sm";
-                    detailsButton.onclick = function () {
-                        // 詳細ページへの遷移処理
-                        viewDetails(customer.customer_id);
-                    };
-                    cell4.appendChild(detailsButton);
+// 顧客詳細を取得
+fetch(`${apiUrl}/customer/${customerId}`)
+  .then((response) => response.json())
+  .then((data) => {
+    // ...
+  })
+  .catch((error) => console.error(error));
 
-                    // 削除ボタンの生成部分
-                    const deleteButton = document.createElement("button");
-                    deleteButton.textContent = "削除";
-                    deleteButton.className = "btn btn-danger btn-sm ml-2";
-                    deleteButton.onclick = function () {
-                        // 削除処理
-                        deleteCustomer(customer.customer_id);
-                    };
-                    cell4.appendChild(deleteButton);
-                });
-            })
-            .catch((error) => console.error(error));
+// 顧客削除
+fetch(`${apiUrl}/customer/${customerId}`, {
+  method: 'DELETE',
+})
+  .then((response) => response.json())
+  .then((data) => {
+    // ...
+  })
+  .catch((error) => console.error(error));
+
+// 新しい顧客を追加
+fetch(`${apiUrl}/add-customer`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    company_name: 'Company Name',
+    industry: 'Industry',
+    contact: 'Contact',
+    location: 'Location',
+  }),
+})
+  .then((response) => response.json())
+  .then((data) => {
+    // ...
+  })
+  .catch((error) => console.error(error));
+
+// 顧客データを更新
+fetch(`${apiUrl}/customer/${customerId}`, {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    company_name: 'Updated Company Name',
+    industry: 'Updated Industry',
+    contact: 'Updated Contact',
+    location: 'Updated Location',
+  }),
+})
+  .then((response) => response.json())
+  .then((data) => {
+    // ...
+  })
+  .catch((error) => console.error(error));
+
 
         function viewDetails(id) {
             // 詳細ページへの遷移処理
