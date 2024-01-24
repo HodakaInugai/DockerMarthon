@@ -1,5 +1,3 @@
-<!-- detail.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,38 +56,38 @@
             })
             .catch(error => console.error('Error:', error));
 
-        // アップデートボタンを押したときに update.html に遷移
-        function redirectToUpdate() {
-    　　window.location.href = `/api_hodaka_inugai/customer/update.html?id=${customerId}`;
-　　　　}
+     // アップデートボタンを押したときに update.html に遷移
+　　function redirectToUpdate() {
+    window.location.href = `/api_hodaka_inugai/customer/update.html?id=${customerId}`;
+　　}
 
-        // 戻るボタンを押したときに一覧ページに遷移
-　　　　function goBackToList() {
-    　　window.location.href = '/api_hodaka_inugai/customer/list.html';
-　　　　}
+　　// 戻るボタンを押したときに一覧ページに遷移
+　　function goBackToList() {
+    window.location.href = '/api_hodaka_inugai/customer/list.html';
+　　}
 
-        // 顧客削除関数
-        window.deleteCustomer = function () {
-            const confirmation = confirm("削除してもよろしいですか？");
+　　// 顧客削除関数
+　　function deleteCustomer() {
+    const confirmation = confirm("削除してもよろしいですか？");
 
-            if (confirmation) {
-                // フォームデータをサーバーに送信
-                fetch(`${apiUrl}/api_hodaka_inugai/customer/${customerId}`, {
-                    method: 'DELETE',
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert('顧客情報が正常に削除されました。');
-                            // 削除後、一覧画面に遷移
-                            window.location.href = 'list.html';
-                        } else {
-                            alert('削除に失敗しました。');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-        }
+    if (confirmation) {
+        // フォームデータをサーバーに送信
+        fetch(`${apiUrl}/api_hodaka_inugai/customer/${customerId}`, {
+            method: 'DELETE',
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('顧客情報が正常に削除されました。');
+                    // 削除後、一覧画面に遷移
+                    window.location.href = 'list.html';
+                } else {
+                    alert('削除に失敗しました。');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+}
         // 関数 goBackToList を定義
         window.goBackToList = function () {
             window.location.href = 'list.html';
@@ -102,5 +100,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
-
 </html>
