@@ -46,7 +46,7 @@
   }
 
         // 顧客詳細を取得
-        fetch(`${apiUrl}/api_hodaka_inugai/customer/${customerId}`)
+        fetch(`${apiUrl}/customer/${customerId}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data); // 取得したデータをコンソールに出力
