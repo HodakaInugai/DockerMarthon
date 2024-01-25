@@ -8,23 +8,18 @@
     <!-- Bootstrap CSSの読み込み -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
-
-<body>
-    <<div class="container mt-5">
+<div class="container mt-5">
     <h2 class="mb-4">顧客詳細</h2>
     <div id="customer-details"></div>
-    <div class="row">
-        <div class="col">
-            <button id="delete-button" class="btn btn-danger">削除</button>
-        </div>
-        <div class="col text-right">
-            <button id="back-button" class="btn btn-primary">戻る</button>
-        </div>
-        <div class="col text-right">
-            <a href="/hodaka_inugai/customer/update.html?id=${customerId}" class="btn btn-info">更新</a>
-        </div>
+    <div class="btn-group" role="group">
+        <button id="delete-button" class="btn btn-danger">削除</button>
+        <button id="back-button" class="btn btn-primary">戻る</button>
+        <a href="/hodaka_inugai/customer/update.html?id=${customerId}" class="btn btn-info">更新</a>
     </div>
 </div>
+
+<body>
+   
 
     <!-- 詳細ページのHTMLコード（一部省略） -->
 
