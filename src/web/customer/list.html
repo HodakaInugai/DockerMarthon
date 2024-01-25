@@ -47,12 +47,12 @@
 
           // 詳細ボタンの生成部分
           const detailsButton = document.createElement("a");
-          detailsButton.href = `/customer/detail.html?id=${encodeURIComponent(customer.customer_id)}`;
+          detailsButton.href = `/hodaka_inugai/customer/detail.html?id=${encodeURIComponent(customer.customer_id)}`;
           detailsButton.textContent = "詳細";
           detailsButton.className = "btn btn-info btn-sm";
           detailsButton.onclick = function () {
             // 詳細ページへの遷移処理
-            viewDetails(hodaka_inugai/customer.customer_id);
+            viewDetails(/customer.customer_id);
           };
           cell4.appendChild(detailsButton);
 
