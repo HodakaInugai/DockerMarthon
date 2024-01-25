@@ -25,49 +25,48 @@
 
     </div>
 
- <script type="module">
-  // URLから顧客IDを取得
-  const urlParams = new URLSearchParams(window.location.search);
-  const customerId = urlParams.get('id');
+    <script type="module">
+        // URLから顧客IDを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const customerId = urlParams.get('id');
 
-  // customerIdがnullまたはundefinedの場合にエラーハンドリングを追加
-  if (customerId === null || customerId === undefined) {
-    // エラー処理をここに追加するか、適切なデフォルトの顧客IDを設定してください
-    console.error('Error: Customer ID is null or undefined.');
-  } else {
-    // customerIdの値をコンソールに出力
-    console.log(customerId);
+        // customerIdがnullまたはundefinedの場合にエラーハンドリングを追加
+        if (customerId === null || customerId === undefined) {
+            // エラー処理をここに追加するか、適切なデフォルトの顧客IDを設定してください
+            console.error('Error: Customer ID is null or undefined.');
+        } else {
+            // customerIdの値をコンソールに出力
+            console.log(customerId);
 
-    // 顧客詳細を取得するためのURLを生成
-    const apiUrl = '/api_hodaka_inugai'; // この行を追加
-    const customerDetailUrl = `${apiUrl}/api_hodaka_inugai/customer/${customerId}`;
+            // 顧客詳細を取得するためのURLを生成
+            const apiUrl = '/api_hodaka_inugai'; // この行を移動
+            const customerDetailUrl = `${apiUrl}/api_hodaka_inugai/customer/${customerId}`;
 
-    // ... 以下のコードは変更しないでください ...
-  }
+            // ... 以下のコードは変更しないでください ...
+        }
 
-  // 顧客詳細を取得
-  fetch(`${apiUrl}/api_hodaka_inugai/customer/${customerId}`)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data); // 取得したデータをコンソールに出力
-      const customerDetails = document.getElementById('customer-details');
+        // 顧客詳細を取得
+        fetch(`${apiUrl}/api_hodaka_inugai/customer/${customerId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // 取得したデータをコンソールに出力
+                const customerDetails = document.getElementById('customer-details');
 
-      // 要素が存在するか確認
-      if (customerDetails) {
-        const customer = data.customer; // ここを変更
-        customerDetails.innerHTML = `
-          <p><strong>ID　　　：　</strong> ${customer.customer_id}</p>
-          <p><strong>会社名　：　</strong> ${customer.company_name}</p>
-          <p><strong>業種　　：　</strong> ${customer.industry}</p>
-          <p><strong>連絡先　：　</strong> ${customer.contact}</p>
-          <p><strong>所在地　：　</strong>${customer.location}</p>
-        `;
-      } else {
-        console.error('Error: Element with ID "customer-details" not found.');
-      }
-    })
-    .catch(error => console.error('Error:', error));
-
+                // 要素が存在するか確認
+                if (customerDetails) {
+                    const customer = data.customer; // ここを変更
+                    customerDetails.innerHTML = `
+                        <p><strong>ID　　　：　</strong> ${customer.customer_id}</p>
+                        <p><strong>会社名　：　</strong> ${customer.company_name}</p>
+                        <p><strong>業種　　：　</strong> ${customer.industry}</p>
+                        <p><strong>連絡先　：　</strong> ${customer.contact}</p>
+                        <p><strong>所在地　：　</strong>${customer.location}</p>
+                    `;
+                } else {
+                    console.error('Error: Element with ID "customer-details" not found.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
 
         // アップデートボタンを押したときに update.html に遷移
         function redirectToUpdate() {
@@ -105,7 +104,6 @@
         // 関数 goBackToList を定義
         window.goBackToList = function () {
             window.location.href = '/hodaka_inugai/customer/list.html';
-
         };
     </script>
 
