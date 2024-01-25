@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Details</title>
     <!-- Bootstrap CSSの読み込み -->
@@ -33,7 +33,7 @@
             console.log(customerId);
 
             // 顧客詳細を取得するためのURLを生成
-            const apiUrl = '/api_hodaka_inugai'; // この行を移動
+            const apiUrl = '/api_hodaka_inugai'; // 関数deleteCustomerの前に移動
             const customerDetailUrl = `${apiUrl}/api_hodaka_inugai/customer/${customerId}`;
 
             // 顧客詳細を取得
@@ -68,6 +68,29 @@
         // 戻るボタンを押したときに一覧ページに遷移
         function goBackToList() {
             window.location.href = '/hodaka_inugai/customer/list.html';
+        }
+        
+        // 顧客削除関数
+        function deleteCustomer() {
+            const confirmation = confirm("削除してもよろしいですか？");
+
+            if (confirmation) {
+                // フォームデータをサーバーに送信
+                fetch(`${apiUrl}/api_hodaka_inugai/customer/${customerId}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('顧客情報が正常に削除されました。');
+                            // 削除後、一覧画面に遷移
+                            window.location.href = '/hodaka_inugai/customer/list.html';
+                        } else {
+                            alert('削除に失敗しました。');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
         }
     </script>
 
