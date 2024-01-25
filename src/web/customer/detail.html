@@ -22,25 +22,30 @@
 
         <!-- 削除ボタン -->
         <button type="button" class="btn btn-danger mr-2" onclick="deleteCustomer()">削除</button>
+        <!-- 削除ボタン -->
+　　　　 <button type="button" class="btn btn-danger mr-2" onclick="deleteCustomer()">削除</button>
+
     </div>
 
-    <script type="module">
+   <script type="module">
+  // URLから顧客IDを取得
+  const urlParams = new URLSearchParams(window.location.search);
+  const customerId = urlParams.get('id');
 
-        // URLから顧客IDを取得
-const urlParams = new URLSearchParams(window.location.search);
-const customerId = urlParams.get('id');
-
-// customerIdがnullまたはundefinedの場合にエラーハンドリングを追加
-if (customerId === null || customerId === undefined) {
+  // customerIdがnullまたはundefinedの場合にエラーハンドリングを追加
+  if (customerId === null || customerId === undefined) {
     // エラー処理をここに追加するか、適切なデフォルトの顧客IDを設定してください
     console.error('Error: Customer ID is null or undefined.');
-} else {
+  } else {
+    // customerIdの値をコンソールに出力
+    console.log(customerId);
+
     // 顧客詳細を取得するためのURLを生成
     const apiUrl = '/api_hodaka_inugai';
     const customerDetailUrl = `${apiUrl}/api_hodaka_inugai/customer/${customerId}`;
 
-    // ... 以下のコードは変更なし ...
-}
+    // ... 以下のコードは変更しないでください ...
+  }
 
         // 顧客詳細を取得
         fetch(`${apiUrl}/api_hodaka_inugai/customer/${customerId}`)
