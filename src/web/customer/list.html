@@ -68,7 +68,8 @@ deleteButton.onclick = function () {
 };
 cell4.appendChild(deleteButton);
 
-          function deleteCustomer(id) {
+         // deleteCustomer 関数を外部に定義
+function deleteCustomer(id) {
   // 削除処理
   if (!id) {
     alert('IDが見つかりません。'); // id が undefined の場合のエラーハンドリング
@@ -90,6 +91,30 @@ cell4.appendChild(deleteButton);
       }
     })
     .catch(error => console.error('Error:', error));
+  }
+}
+
+// 顧客リストを取得して表示
+fetch(`${apiUrl}/api_hodaka_inugai/customer`)
+  .then((response) => response.json())
+  .then((data) => {
+    const list = document.getElementById("customer-list");
+    data.forEach((customer, index) => {
+      // ... 以前のコード ...
+      
+      // 削除ボタンの生成部分
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "削除";
+      deleteButton.className = "btn btn-danger btn-sm ml-2";
+      deleteButton.onclick = function () {
+        // 削除処理
+        deleteCustomer(customer.customer_id); // customer_id を渡す
+      };
+      cell4.appendChild(deleteButton);
+    });
+  })
+  .catch((error) => console.error(error));
+
   }
 }
   </script>
