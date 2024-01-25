@@ -14,7 +14,11 @@
         <h2 class="mb-4">顧客詳細</h2>
         <div id="customer-details"></div>
         
+        <!-- 削除ボタン -->
+        <button type="button" class="btn btn-danger mr-2" id="delete-button">削除</button>
         
+        <!-- 戻るボタン -->
+        <button type="button" class="btn btn-primary" onclick="goBackToList()">戻る</button>
     </div>
 
     <!-- スクリプト部分 -->
@@ -51,6 +55,15 @@
                     }
                 })
                 .catch(error => console.error('Error:', error));
+
+                // 削除ボタンのクリックイベントを追加
+                const deleteButton = document.getElementById('delete-button');
+                if (deleteButton) {
+                    deleteButton.addEventListener('click', () => {
+                        deleteCustomer(customerId);
+                    });
+                }
+
         }
 
         // 戻るボタンを押したときに一覧ページに遷移
@@ -59,12 +72,12 @@
         }
 
         // 顧客削除関数
-        function deleteCustomer() {
+        function deleteCustomer(id) {
             const confirmation = confirm("削除してもよろしいですか？");
 
             if (confirmation) {
                 // フォームデータをサーバーに送信
-                fetch(`${apiUrl}/api_hodaka_inugai/customer/${customerId}`, {
+                fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
                     method: 'DELETE',
                 })
                     .then(response => response.json())
