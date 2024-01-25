@@ -48,7 +48,11 @@
                     if (customerDetails) {
                         const customer = data.customer;
                         customerDetails.innerHTML = `
-                            <!-- 顧客詳細の表示コード（省略） -->
+                            <p><strong>ID　　　：　</strong> ${customer.customer_id}</p>
+                            <p><strong>会社名　：　</strong> ${customer.companyname}</p>
+                            <p><strong>業種　　：　</strong> ${customer.industry}</p>
+                            <p><strong>連絡先　：　</strong> ${customer.contact}</p>
+                            <p><strong>所在地　：　</strong> ${customer.location}</p>
                         `;
                     } else {
                         console.error('Error: Element with ID "customer-details" not found.');
