@@ -104,7 +104,21 @@
             window.location.href = '/hodaka_inugai/customer/list.html';
         };
     </script>
+    
+　　 <div class="container mt-5">
+        <h2 class="mb-4">顧客詳細</h2>
+        <div id="customer-details"></div>
 
+        <!-- 更新ボタン -->
+        <button type="button" class="btn btn-success mr-2" onclick="redirectToUpdate()">更新</button>
+
+        <!-- 戻るボタンを追加 -->
+        <button type="button" class="btn btn-primary mr-2" onclick="goBackToList()">戻る</button>
+
+        <!-- 削除ボタン -->
+        <button type="button" class="btn btn-danger mr-2" onclick="deleteCustomer()">削除</button>
+
+    </div>
     <!-- BootstrapのJavaScriptの読み込み -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
