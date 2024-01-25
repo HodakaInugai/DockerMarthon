@@ -47,12 +47,12 @@
 
           // 詳細ボタンの生成部分
           const detailsButton = document.createElement("a");
-          detailsButton.href = `/customer/detail.html?id=${encodeURIComponent(customer.customer_id)}`;
+          detailsButton.href = `/customer/detail.html?id=${encodeURIComponent(customer.customers_id)}`;
           detailsButton.textContent = "詳細";
           detailsButton.className = "btn btn-info btn-sm";
           detailsButton.onclick = function () {
             // 詳細ページへの遷移処理
-            viewDetails(customer.customer_id);
+            viewDetails(customer.customers_id);
           };
           cell4.appendChild(detailsButton);
 
@@ -63,7 +63,7 @@
           console.log(customer.customer_id)
           deleteButton.onclick = function () {
             // 削除処理
-            deleteCustomer(customer.customer_id); // customer_id を渡す
+            deleteCustomer(customer.customers_id); // customer_id を渡す
           };
           cell4.appendChild(deleteButton);
         });
