@@ -17,100 +17,96 @@
 
     <!-- 詳細ページのHTMLコード（一部省略） -->
 
-<script type="module">
-　  const apiUrl = '/api_hodaka_inugai';
-
-    // URLから顧客IDを取得
-    const urlParams = new URLSearchParams(window.location.search);
-    const customerId = urlParams.get('id');
-
-    // customerIdがnullまたはundefinedの場合にエラーハンドリングを追加
-    if (customerId === null || customerId === undefined) {
-        console.error('Error: Customer ID is null or undefined.');
-    } else {
-        console.log(customerId);
-
-        // 顧客詳細を取得するためのURLを生成
+    <script type="module">
         const apiUrl = '/api_hodaka_inugai';
-        const customerDetailUrl = `${apiUrl}/api_hodaka_inugai/customer/${customerId}`;
 
-        // 顧客詳細を取得
-        fetch(customerDetailUrl)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                const customerDetails = document.getElementById('customer-details');
+        // URLから顧客IDを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const customerId = urlParams.get('id');
 
-                if (customerDetails) {
-                    const customer = data.customer;
-                    customerDetails.innerHTML = `
-                        <!-- 顧客詳細の表示コード（省略） -->
-                    `;
+        // customerIdがnullまたはundefinedの場合にエラーハンドリングを追加
+        if (customerId === null || customerId === undefined) {
+            console.error('Error: Customer ID is null or undefined.');
+        } else {
+            console.log(customerId);
 
-                    // 削除ボタンの生成
-                    const deleteButton = document.createElement("button");
-                    deleteButton.textContent = "削除";
-                    deleteButton.className = "btn btn-danger mr-2";
-                    deleteButton.onclick = function () {
-                        // 削除処理
-                        deleteCustomer(customer.customer_id); // customer_id を渡す
-                    };
-                    customerDetails.appendChild(deleteButton);
-                } else {
-                    console.error('Error: Element with ID "customer-details" not found.');
-                }
-            })
-            .catch(error => console.error('Error:', error));
+            // 顧客詳細を取得するためのURLを生成
+            const apiUrl = '/api_hodaka_inugai';
+            const customerDetailUrl = `${apiUrl}/api_hodaka_inugai/customer/${customerId}`;
 
-    }
-    // 戻るボタンのクリックイベントを追加
-                    const goBackButton = document.getElementById('go-back-button');
-                    if (goBackButton) {
-                        goBackButton.onclick = function () {
-                            goBackToList();
-                        };
-                    } else {
-                        console.error('Error: Element with ID "go-back-button" not found.');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
-      // アップデートボタンを押したときに update.html に遷移
-    function redirectToUpdate() {
-        window.location.href = `/hodaka_inugai/customer/update.html?id=${customerId}`;
-    }
-
-    // 戻るボタンを押したときに一覧ページに遷移
-    function goBackToList() {
-        window.location.href = '/hodaka_inugai/customer/list.html';
-    }
-
-    // 顧客削除関数
-    function deleteCustomer(id) {
-        const confirmation = confirm("削除してもよろしいですか？");
-
-        if (confirmation) {
-            // フォームデータをサーバーに送信
-            fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
-                method: 'DELETE',
-            })
+            // 顧客詳細を取得
+            fetch(customerDetailUrl)
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success) {
-                        alert('顧客情報が正常に削除されました。');
-                        // 削除後、一覧画面に遷移
-                        window.location.href = '/hodaka_inugai/customer/list.html';
+                    console.log(data);
+                    const customerDetails = document.getElementById('customer-details');
+
+                    if (customerDetails) {
+                        const customer = data.customer;
+                        customerDetails.innerHTML = `
+                            <!-- 顧客詳細の表示コード（省略） -->
+                        `;
+
+                        // 削除ボタンの生成
+                        const deleteButton = document.createElement("button");
+                        deleteButton.textContent = "削除";
+                        deleteButton.className = "btn btn-danger mr-2";
+                        deleteButton.onclick = function () {
+                            // 削除処理
+                            deleteCustomer(customer.customer_id); // customer_id を渡す
+                        };
+                        customerDetails.appendChild(deleteButton);
                     } else {
-                        alert('削除に失敗しました。');
+                        console.error('Error: Element with ID "customer-details" not found.');
                     }
                 })
                 .catch(error => console.error('Error:', error));
+
         }
-    }
-</script>
 
-<!-- 他のHTMLとBootstrapのスクリプト（省略） -->
+        // 戻るボタンのクリックイベントを追加
+        const goBackButton = document.getElementById('go-back-button');
+        if (goBackButton) {
+            goBackButton.onclick = function () {
+                goBackToList();
+            };
+        } else {
+            console.error('Error: Element with ID "go-back-button" not found.');
+        }
 
+        // アップデートボタンを押したときに update.html に遷移
+        function redirectToUpdate() {
+            window.location.href = `/hodaka_inugai/customer/update.html?id=${customerId}`;
+        }
+
+        // 戻るボタンを押したときに一覧ページに遷移
+        function goBackToList() {
+            window.location.href = '/hodaka_inugai/customer/list.html';
+        }
+
+        // 顧客削除関数
+        function deleteCustomer(id) {
+            const confirmation = confirm("削除してもよろしいですか？");
+
+            if (confirmation) {
+                // フォームデータをサーバーに送信
+                fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('顧客情報が正常に削除されました。');
+                            // 削除後、一覧画面に遷移
+                            window.location.href = '/hodaka_inugai/customer/list.html';
+                        } else {
+                            alert('削除に失敗しました。');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        }
+    </script>
 
     <!-- BootstrapのJavaScriptの読み込み -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -119,4 +115,3 @@
 </body>
 
 </html>
-
