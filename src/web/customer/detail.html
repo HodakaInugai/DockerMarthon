@@ -53,6 +53,11 @@
                             <p><strong>所在地　：　</strong> ${customer.location}</p>
                         `;
 
+                        // アップデートボタンを押したときに update.html に遷移
+                        function redirectToUpdate() {
+                        window.location.href = `/hodaka_inugai/customer/update.html?id=${customerId}`;
+                        }
+                        
                         // 削除ボタンのクリックイベントを追加
                         const deleteButton = document.getElementById('delete-button');
                         if (deleteButton) {
