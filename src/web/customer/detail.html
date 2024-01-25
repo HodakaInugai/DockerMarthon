@@ -13,10 +13,15 @@
     <div class="container mt-5">
         <h2 class="mb-4">顧客詳細</h2>
         <div id="customer-details"></div>
+        
+        <!-- 削除ボタン -->
+        <button type="button" class="btn btn-danger mr-2" onclick="deleteCustomer()">削除</button>
+        
+        <!-- 戻るボタン -->
+        <button type="button" class="btn btn-primary" onclick="goBackToList()">戻る</button>
     </div>
 
-    <!-- 詳細ページのHTMLコード（一部省略） -->
-
+    <!-- スクリプト部分 -->
     <script type="module">
         const apiUrl = '/api_hodaka_inugai';
 
@@ -31,7 +36,6 @@
             console.log(customerId);
 
             // 顧客詳細を取得するためのURLを生成
-            const apiUrl = '/api_hodaka_inugai';
             const customerDetailUrl = `${apiUrl}/api_hodaka_inugai/customer/${customerId}`;
 
             // 顧客詳細を取得
@@ -46,37 +50,11 @@
                         customerDetails.innerHTML = `
                             <!-- 顧客詳細の表示コード（省略） -->
                         `;
-
-                        // 削除ボタンの生成
-                        const deleteButton = document.createElement("button");
-                        deleteButton.textContent = "削除";
-                        deleteButton.className = "btn btn-danger mr-2";
-                        deleteButton.onclick = function () {
-                            // 削除処理
-                            deleteCustomer(customer.customer_id); // customer_id を渡す
-                        };
-                        customerDetails.appendChild(deleteButton);
                     } else {
                         console.error('Error: Element with ID "customer-details" not found.');
                     }
                 })
                 .catch(error => console.error('Error:', error));
-
-        }
-
-        // 戻るボタンのクリックイベントを追加
-        const goBackButton = document.getElementById('go-back-button');
-        if (goBackButton) {
-            goBackButton.onclick = function () {
-                goBackToList();
-            };
-        } else {
-            console.error('Error: Element with ID "go-back-button" not found.');
-        }
-
-        // アップデートボタンを押したときに update.html に遷移
-        function redirectToUpdate() {
-            window.location.href = `/hodaka_inugai/customer/update.html?id=${customerId}`;
         }
 
         // 戻るボタンを押したときに一覧ページに遷移
@@ -85,12 +63,12 @@
         }
 
         // 顧客削除関数
-        function deleteCustomer(id) {
+        function deleteCustomer() {
             const confirmation = confirm("削除してもよろしいですか？");
 
             if (confirmation) {
                 // フォームデータをサーバーに送信
-                fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
+                fetch(`${apiUrl}/api_hodaka_inugai/customer/${customerId}`, {
                     method: 'DELETE',
                 })
                     .then(response => response.json())
