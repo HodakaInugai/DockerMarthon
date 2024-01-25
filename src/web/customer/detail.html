@@ -13,15 +13,10 @@
     <div class="container mt-5">
         <h2 class="mb-4">顧客詳細</h2>
         <div id="customer-details"></div>
-        
-        <!-- 削除ボタン -->
-        <button type="button" class="btn btn-danger mr-2" id="delete-button">削除</button>
-        
-        <!-- 戻るボタン -->
-        <button type="button" class="btn btn-primary" onclick="goBackToList()">戻る</button>
     </div>
 
-    <!-- スクリプト部分 -->
+    <!-- 詳細ページのHTMLコード（一部省略） -->
+
     <script type="module">
         const apiUrl = '/api_hodaka_inugai';
 
@@ -54,20 +49,27 @@
                             <p><strong>連絡先　：　</strong> ${customer.contact}</p>
                             <p><strong>所在地　：　</strong> ${customer.location}</p>
                         `;
+
+                        // 削除ボタンのクリックイベントを追加
+                        const deleteButton = document.getElementById('delete-button');
+                        if (deleteButton) {
+                            deleteButton.addEventListener('click', () => {
+                                deleteCustomer(customerId);
+                            });
+                        }
+
+                        // 戻るボタンのクリックイベントを追加
+                        const backButton = document.getElementById('back-button');
+                        if (backButton) {
+                            backButton.addEventListener('click', () => {
+                                goBackToList();
+                            });
+                        }
                     } else {
                         console.error('Error: Element with ID "customer-details" not found.');
                     }
                 })
                 .catch(error => console.error('Error:', error));
-
-                // 削除ボタンのクリックイベントを追加
-                const deleteButton = document.getElementById('delete-button');
-                if (deleteButton) {
-                    deleteButton.addEventListener('click', () => {
-                        deleteCustomer(customerId);
-                    });
-                }
-
         }
 
         // 戻るボタンを押したときに一覧ページに遷移
@@ -98,6 +100,8 @@
             }
         }
     </script>
+
+    <!-- 他のHTMLとBootstrapのスクリプト（省略） -->
 
     <!-- BootstrapのJavaScriptの読み込み -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
