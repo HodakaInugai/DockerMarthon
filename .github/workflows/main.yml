@@ -24,6 +24,6 @@ jobs:
           SSH_PORT: ${{ secrets.PRODUCTION_SSH_PORT }}
           SSH_USER: ${{ secrets.PRODUCTION_SSH_USER }}
           SSH_KEY: ${{ secrets.PRODUCTION_SSHE_SSH_KEY }}
-        if: success()
+    
       - run: ssh ${{ steps.ssh.outputs.SERVER }} bash /app/deploy.sh hodaka_inugai
       
