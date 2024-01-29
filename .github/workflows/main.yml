@@ -13,21 +13,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set Up SSH Key
-        uses: webfactory/ssh-agent@v0.5
-        with:
-          ssh-private-key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
-
-      - name: Deploy to Staging
+      - name: Set Up SSH Key and Deploy to Staging
         run: |
-          ssh ${{ secrets.STAGING_SSH_USER }}@${{ secrets.STAGING_SSH_HOST }} -p ${{ secrets.STAGING_SSH_PORT }} "bash /path/to/deploy.sh"
+          ssh-keyscan -t rsa ${{ secrets.STAGING_SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh -i ${{ secrets.STAGING_SSH_PRIVATE_KEY }} -p ${{ secrets.STAGING_SSH_PORT }} ${{ secrets.STAGING_SSH_USER }}@${{ secrets.STAGING_SSH_HOST }} "bash /path/to/deploy.sh"
 
-      - name: Set Up SSH Key for Production
-        uses: webfactory/ssh-agent@v0.5
-        with:
-          ssh-private-key: ${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }}
-
-      - name: Deploy to Production
+      - name: Set Up SSH Key and Deploy to Production
         if: success()
         run: |
-          ssh ${{ secrets.PRODUCTION_SSH_USER }}@${{ secrets.PRODUCTION_SSH_HOST }} -p ${{ secrets.PRODUCTION_SSH_PORT }} "bash /path/to/deploy.sh"
+          ssh-keyscan -t rsa ${{ secrets.PRODUCTION_SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh -i ${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }} -p ${{ secrets.PRODUCTION_SSH_PORT }} ${{ secrets.PRODUCTION_SSH_USER }}@${{ secrets.PRODUCTION_SSH_HOST }} "bash /path/to/deploy.sh"
