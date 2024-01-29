@@ -27,6 +27,9 @@ jobs:
             -p ${{ secrets.STAGING_SSH_PORT }} \
             "bash /path/to/deploy.sh"
 
+            - run: ssh ${{ steps.ssh.outputs.SERVER }} "bash /app/deploy_test.sh hodaka_inugai"
+
+
       - name: Set Up SSH Key for Production
         uses: invi5H/ssh-action@v1
         with:
@@ -40,4 +43,4 @@ jobs:
         run: |
           ssh ${{ secrets.PRODUCTION_SSH_USER }}@${{ secrets.PRODUCTION_SSH_HOST }} \
             -p ${{ secrets.PRODUCTION_SSH_PORT }} \
-            "bash /path/to/deploy.sh"
+            "bash /app/deploy_test.sh hodaka_inugai"
