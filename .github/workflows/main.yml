@@ -1,4 +1,4 @@
-name: ssh command
+name: main
 on:
   push:
     branches:
