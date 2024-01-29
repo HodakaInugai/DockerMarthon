@@ -1,30 +1,34 @@
-name: Deploy to Staging and Production
-
+name: main
 on:
   push:
     branches:
-      - main
+      - main #どのブランチにpushされたらjobを起動するか
+
 jobs:
-  test:
+  deploy1:  #jobは複数定義できる
     runs-on: ubuntu-latest
     steps:
-      - id: ssh
+      - name: SSH to Development #nameはなくても良い
+        id: dev_ssh
         uses: invi5H/ssh-action@v1
         with:
           SSH_HOST: ${{ secrets.DEV_SSH_HOST }}
           SSH_PORT: ${{ secrets.DEV_SSH_PORT }}
           SSH_USER: ${{ secrets.DEV_SSH_USER }}
           SSH_KEY: ${{ secrets.DEV_SSHE_SSH_KEY }}
-      - run: ssh ${{ steps.ssh.outputs.SERVER }} bash /app/deploy.sh hodaka_inugai
-
-  PRODUCTION:
+      - run: ssh ${{ steps.dev_ssh.outputs.SERVER }} bash /app/deploy.sh hodaka_inugai
+    
+  deploy2:
+    needs: deploy1 #ジョブは本来並行して実行されるがneedsキーワードで指定したジョブが完了するのを待てる
     runs-on: ubuntu-latest
+    if: success() #ifに対してsuccess()を定義することで前のジョブが成功した場合にのみ実行する条件にできる（ifの条件は他にもいろいろ定義可）
     steps:
-      - id: dfg
+      - name: SSH to Production
+        id: prod_ssh
         uses: invi5H/ssh-action@v1
         with:
           SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
           SSH_PORT: ${{ secrets.PRODUCTION_SSH_PORT }}
           SSH_USER: ${{ secrets.PRODUCTION_SSH_USER }}
           SSH_KEY: ${{ secrets.PRODUCTION_SSHE_SSH_KEY }}
-      - run: ssh ${{ steps.ssh.outputs.SERVER }} bash /app/deploy.sh hodaka_inugai
+      - run: ssh -v ${{ steps.prod_ssh.outputs.SERVER }} bash /app/deploy.sh hodaka_inugai #-vをつけることで詳細なデバッグが出力
