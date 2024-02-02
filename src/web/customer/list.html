@@ -64,31 +64,14 @@
           deleteButton.id = `delete-button-${customer.customer_id}`; // ボタンに一意のIDを設定
           console.log(customer.customer_id)
           deleteButton.onclick = function () {
-            // 削除処理
-            deleteCustomer(customer.customer_id); // customer_id を渡す
-          };
-          cell4.appendChild(deleteButton);
-        });
-      })
-      .catch((error) => console.error(error));
-
-    function deleteCustomer(id) {
-      // 削除処理
-      const customerId = this.dataset.customerId; // data-customer-id 属性から customer_id を取得
-      const confirmDelete = confirm("本当に削除しますか？");
-      if (confirmDelete) {
-        fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
-          method: 'DELETE',
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            alert('削除が成功しました。');
-            // ページリロード
-            location.reload();
-          } else {
-            alert('削除に失敗しました。');
-          }
+        　 // 削除処理の確認ダイアログを表示
+                        const customerId = this.dataset.customerId; // data-customer-id 属性から customer_id を取得
+                        const confirmDelete = confirm("本当に削除しますか？");
+                        if (confirmDelete) {
+                            deleteCustomer(customerId); // 削除処理を実行
+                        }
+                    };
+                    cell4.appendChild(deleteButton);
         })
         .catch(error => console.error('Error:', error));
       }
