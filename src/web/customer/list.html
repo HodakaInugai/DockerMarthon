@@ -73,27 +73,7 @@
                         }
                     };
                     cell4.appendChild(deleteButton);
-
-                    function deleteCustomer(id) {
-                        // 削除処理
-                        if (!id) {
-                            alert('IDが見つかりません。'); // id が undefined の場合のエラーハンドリング
-                            console.error('IDが見つかりません。'); // コンソールにエラーメッセージを表示
-                            return;
-                        }
-                                                        .then(response => response.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        alert('削除が成功しました。');
-                                        // ページリロード
-                                        location.reload();
-                                    } else {
-                                        alert('削除に失敗しました。');
-                                    }
-                                })
-                                .catch(error => console.error('Error:', error));
-                        }
-                    }
+                　 }
                 })
             })
     </script>
