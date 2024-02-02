@@ -81,12 +81,7 @@
                             console.error('IDが見つかりません。'); // コンソールにエラーメッセージを表示
                             return;
                         }
-                        const confirmDelete = confirm("本当に削除しますか？");
-                        if (confirmDelete) {
-                            fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
-                                method: 'DELETE',
-                            })
-                                .then(response => response.json())
+                                                        .then(response => response.json())
                                 .then(data => {
                                     if (data.success) {
                                         alert('削除が成功しました。');
