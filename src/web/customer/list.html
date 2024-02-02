@@ -44,31 +44,35 @@
           cell1.textContent = index + 1;
           cell2.textContent = customer.companyname;
           cell3.textContent = customer.contact;
-
+　　　　　
           // 詳細ボタンの生成部分
-          const detailsButton = document.createElement("a");
-          detailsButton.href = `/hodaka_inugai/customer/detail.html?id=${encodeURIComponent(customer.customer_id)}`;
-          detailsButton.textContent = "詳細";
-          detailsButton.className = "btn btn-info btn-sm"
-          detailsButton.onclick = function () {
-            // 詳細ページへの遷移処理
-            viewDetails(customer.customer_id);
-          };
-          cell4.appendChild(detailsButton);
+const detailsButton = document.createElement("a");
+detailsButton.href = `/hodaka_inugai/customer/detail.html?id=${encodeURIComponent(customer.customer_id)}`;
+detailsButton.textContent = "詳細";
+detailsButton.className = "btn btn-info btn-sm";
+detailsButton.id = `details-button-${customer.customer_id}`; // ボタンに一意のIDを設定
+detailsButton.onclick = function () {
+  // 詳細ページへの遷移処理
+  viewDetails(customer.customer_id);
+};
+cell4.appendChild(detailsButton);
 
-          // 削除ボタンの生成部分
-          const deleteButton = document.createElement("button");
-          deleteButton.textContent = "削除";
-          deleteButton.className = "btn btn-danger btn-sm ml-2";
-          console.log(customer.customer_id)
-          deleteButton.onclick = function () {
-            // 削除処理
-            deleteCustomer(customer.customer_id); // customer_id を渡す
-          };
-          cell4.appendChild(deleteButton);
-        });
-      })
-      .catch((error) => console.error(error));
+// 削除ボタンの生成部分
+const deleteButton = document.createElement("button");
+deleteButton.textContent = "削除";
+deleteButton.className = "btn btn-danger btn-sm ml-2";
+deleteButton.dataset.customerId = customer.customer_id; // data-customer-id 属性に customer_id を設定
+deleteButton.id = `delete-button-${customer.customer_id}`; // ボタンに一意のIDを設定
+console.log(customer.customer_id);
+deleteButton.onclick = function () {
+  // 削除処理の確認ダイアログを表示
+  const customerId = this.dataset.customerId; // data-customer-id 属性から customer_id を取得
+  const confirmDelete = confirm("本当に削除しますか？");
+  if (confirmDelete) {
+    deleteCustomer(customerId); // 削除処理を実行
+  }
+};
+cell4.appendChild(deleteButton);
 
     function deleteCustomer(id) {
       // 削除処理
