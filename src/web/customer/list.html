@@ -60,6 +60,8 @@
           const deleteButton = document.createElement("button");
           deleteButton.textContent = "削除";
           deleteButton.className = "btn btn-danger btn-sm ml-2";
+          deleteButton.dataset.customerId = customer.customer_id; // data-customer-id 属性に customer_id を設定
+          deleteButton.id = `delete-button-${customer.customer_id}`; // ボタンに一意のIDを設定
           console.log(customer.customer_id)
           deleteButton.onclick = function () {
             // 削除処理
