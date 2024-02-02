@@ -2,73 +2,106 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customer List</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
 <body>
-  <div class="container mt-5">
-    <h1 class="mb-4">顧客情報リスト</h1>
-    <table class="table table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">id</th>
-          <th scope="col">Company Name</th>
-          <th scope="col">Contact</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody id="customer-list">
-        <!-- 顧客データはここに挿入されます -->
-      </tbody>
-    </table>
-  </div>
+    <div class="container mt-5">
+        <h1 class="mb-4">顧客情報リスト</h1>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Company Name</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                <!-- 顧客データはここに挿入されます -->
+            <tbody id="customer-list">
+                <!-- 顧客データが表示されます -->
+            </tbody>
 
-  <script type="module">
-    const apiUrl = '/api_hodaka_inugai';
+            <script type="module">
+                // 顧客リストを取得して表示
+                fetch(`${apiUrl}/api_hodaka_inugai/customer`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const list = document.getElementById("customer-list");
+                        data.forEach((customer, index) => {
+                            // 表示する顧客情報を取得
+                            const customerId = customer.customer_id;
+                            const companyName = customer.companyname;
+                            const contact = customer.contact;
 
-    // 顧客リストを取得して表示
-    async function fetchAndDisplayCustomers() {
-      try {
-        const response = await fetch(`${apiUrl}/api_hodaka_inugai/customer`);
-        const data = await response.json();
-        const list = document.getElementById("customer-list");
+                            // テーブル行を作成
+                            const row = document.createElement("tr");
 
-        data.forEach((customer, index) => {
-          const row = list.insertRow();
-          row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${customer.companyname}</td>
-            <td>${customer.contact}</td>
-            <td>
-              <a href="/hodaka_inugai/customer/detail.html?id=${encodeURIComponent(customer.customer_id)}" class="btn btn-info btn-sm">詳細</a>
-              <button class="btn btn-danger btn-sm ml-2" data-customer-id="${customer.customer_id}" id="delete-button-${customer.customer_id}">削除</button>
-            </td>
-          `;
+                            // 列を作成してデータを追加
+                            const cell1 = document.createElement("td");
+                            cell1.textContent = customerId;
 
-          const deleteButton = row.querySelector(`#delete-button-${customer.customer_id}`);
-          deleteButton.addEventListener("click", async () => {
-            const confirmDelete = confirm("本当に削除しますか？");
-            if (confirmDelete) {
-              await deleteCustomer(customer.customer_id);
-              row.remove(); // テーブルから行を削除
-            }
-          });
-        });
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    }
+                            const cell2 = document.createElement("td");
+                            cell2.textContent = companyName;
 
-    // 初期読み込み時に顧客リストを取得して表示
-    fetchAndDisplayCustomers();
-  </script>
+                            const cell3 = document.createElement("td");
+                            cell3.textContent = contact;
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                            const cell4 = document.createElement("td");
+
+                            // 削除ボタンの生成
+                            const deleteButton = document.createElement("button");
+                            deleteButton.textContent = "削除";
+                            deleteButton.className = "btn btn-danger btn-sm ml-2";
+                            deleteButton.dataset.customerId = customerId;
+                            deleteButton.id = `delete-button-${customerId}`;
+
+                            // 削除ボタンクリック時の処理を追加
+                            deleteButton.onclick = function () {
+                                const customerId = this.dataset.customerId;
+                                const confirmDelete = confirm("本当に削除しますか？");
+                                if (confirmDelete) {
+                                    deleteCustomer(customerId);
+                                }
+                            };
+
+                            cell4.appendChild(deleteButton);
+
+                            // 行に列を追加
+                            row.appendChild(cell1);
+                            row.appendChild(cell2);
+                            row.appendChild(cell3);
+                            row.appendChild(cell4);
+
+                            // テーブルに行を追加
+                            list.appendChild(row);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+
+                // 顧客削除関数
+                function deleteCustomer(id) {
+                    fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
+                        method: 'DELETE',
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('顧客情報が正常に削除されました。');
+                                location.reload(); // ページをリロードして最新情報を表示
+                            } else {
+                                alert('削除に失敗しました。');
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+            </script>
+
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
