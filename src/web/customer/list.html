@@ -57,44 +57,44 @@
           cell4.appendChild(detailsButton);
 
           // 削除ボタンの生成部分
-    //       const deleteButton = document.createElement("button");
-    //       deleteButton.textContent = "削除";
-    //       deleteButton.className = "btn btn-danger btn-sm ml-2";
-    //       console.log(customer.customer_id)
-    //       deleteButton.onclick = function () {
-    //         // 削除処理
-    //         deleteCustomer(customer.customer_id); // customer_id を渡す
-    //       };
-    //       cell4.appendChild(deleteButton);
-    //     });
-    //   })
-    //   .catch((error) => console.error(error));
+          const deleteButton = document.createElement("button");
+          deleteButton.textContent = "削除";
+          deleteButton.className = "btn btn-danger btn-sm ml-2";
+          console.log(customer.customer_id)
+          deleteButton.onclick = function () {
+            // 削除処理
+            deleteCustomer(customer.customer_id); // customer_id を渡す
+          };
+          cell4.appendChild(deleteButton);
+        });
+      })
+      .catch((error) => console.error(error));
 
-    // function deleteCustomer(id) {
-    //   // 削除処理
-    //   if (!id) {
-    //     alert('IDが見つかりません。'); // id が undefined の場合のエラーハンドリング
-    //      console.error('IDが見つかりません。'); // コンソールにエラーメッセージを表示
-    //     return;
-    //   }
-    //   const confirmDelete = confirm("本当に削除しますか？");
-    //   if (confirmDelete) {
-    //     fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
-    //       method: 'DELETE',
-    //     })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       if (data.success) {
-    //         alert('削除が成功しました。');
-    //         // ページリロード
-    //         location.reload();
-    //       } else {
-    //         alert('削除に失敗しました。');
-    //       }
-    //     })
-    //     .catch(error => console.error('Error:', error));
-    //   }
-    // }
+    function deleteCustomer(id) {
+      // 削除処理
+      if (!id) {
+        alert('IDが見つかりません。'); // id が undefined の場合のエラーハンドリング
+         console.error('IDが見つかりません。'); // コンソールにエラーメッセージを表示
+        return;
+      }
+      const confirmDelete = confirm("本当に削除しますか？");
+      if (confirmDelete) {
+        fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
+          method: 'DELETE',
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('削除が成功しました。');
+            // ページリロード
+            location.reload();
+          } else {
+            alert('削除に失敗しました。');
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      }
+    }
 
     // 削除ボタンの生成部分
 const deleteButton = document.createElement("button");
