@@ -74,11 +74,7 @@
 
     function deleteCustomer(id) {
       // 削除処理
-      if (!id) {
-        alert('IDが見つかりません。'); // id が undefined の場合のエラーハンドリング
-         console.error('IDが見つかりません。'); // コンソールにエラーメッセージを表示
-        return;
-      }
+      const customerId = this.dataset.customerId; // data-customer-id 属性から customer_id を取得
       const confirmDelete = confirm("本当に削除しますか？");
       if (confirmDelete) {
         fetch(`${apiUrl}/api_hodaka_inugai/customer/${id}`, {
